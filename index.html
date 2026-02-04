@@ -5,105 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Valentine?</title>
   <style>
-    :root {
-      --bg1: #ffdde8;
-      --bg2: #fff6fb;
-      --yes: #22c55e;
-      --no: #ef4444;
-      --text: #111827;
+    :root{
+      --bg1:#ffdde8;
+      --bg2:#fff6fb;
+      --yes:#22c55e;
+      --no:#ef4444;
+      --text:#111827;
+    }
+    *{box-sizing:border-box;}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:grid;
+      place-items:center;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:radial-gradient(circle at top,var(--bg2),var(--bg1));
+      color:var(--text);
+    }
+    .card{
+      width:min(560px,92vw);
+      background:rgba(255,255,255,0.75);
+      backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,0.9);
+      border-radius:20px;
+      padding:28px 22px;
+      box-shadow:0 18px 60px rgba(0,0,0,0.10);
+      text-align:center;
     }
 
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(circle at top, var(--bg2), var(--bg1));
-      color: var(--text);
+    /* immagine pucciosa */
+    .top-img{
+      width:84px;
+      height:84px;
+      object-fit:cover;
+      border-radius:18px;
+      box-shadow:0 10px 25px rgba(0,0,0,0.10);
+      margin:0 auto 10px auto;
+      display:block;
     }
 
-    .card {
-      width: min(560px, 92vw);
-      background: rgba(255,255,255,0.75);
-      backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.9);
-      border-radius: 20px;
-      padding: 28px 22px;
-      box-shadow: 0 18px 60px rgba(0,0,0,0.10);
-      text-align: center;
+    h1{
+      margin:0 0 10px 0;
+      font-size:clamp(22px,4vw,34px);
+      line-height:1.15;
+    }
+    .sub{
+      margin:0 0 22px 0;
+      opacity:0.85;
+      font-size:15px;
     }
 
-    h1 {
-      margin: 0 0 10px 0;
-      font-size: clamp(22px, 4vw, 34px);
-      line-height: 1.15;
+    /* Layout: due bottoni in riga, ma con wrap e senza sovrapposizioni */
+    .buttons{
+      display:flex;
+      gap:12px;
+      justify-content:center;
+      align-items:stretch;
+      flex-wrap:wrap;
+      margin-top:10px;
     }
 
-    .sub {
-      margin: 0 0 22px 0;
-      opacity: 0.85;
-      font-size: 15px;
+    button{
+      border:0;
+      border-radius:999px;
+      padding:14px 20px;
+      font-size:18px;
+      font-weight:800;
+      cursor:pointer;
+      transition:transform 120ms ease, filter 120ms ease;
+      color:white;
+      min-width:160px;
+      max-width:100%;
+      white-space:normal;
+      line-height:1.15;
+    }
+    button:active{transform:scale(0.98);}
+
+    #yesBtn{
+      background:linear-gradient(180deg,#34d399,var(--yes));
+      box-shadow:0 10px 25px rgba(34,197,94,0.35);
+    }
+    #noBtn{
+      background:linear-gradient(180deg,#fb7185,var(--no));
+      box-shadow:0 10px 25px rgba(239,68,68,0.25);
     }
 
-    .buttons {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-
-    button {
-      border: 0;
-      border-radius: 999px;
-      padding: 14px 20px;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 120ms ease, filter 120ms ease;
-      color: white;
-      min-width: 140px;
-    }
-
-    button:active { transform: scale(0.98); }
-
-    #yesBtn {
-      background: linear-gradient(180deg, #34d399, var(--yes));
-      box-shadow: 0 10px 25px rgba(34,197,94,0.35);
-      transform-origin: center;
-    }
-
-    #noBtn {
-      background: linear-gradient(180deg, #fb7185, var(--no));
-      box-shadow: 0 10px 25px rgba(239,68,68,0.25);
-    }
-
-    .result {
-      margin-top: 18px;
-      font-size: 18px;
-      font-weight: 700;
-      display: none;
-    }
-
-    .heart {
-      font-size: 40px;
-      margin-bottom: 8px;
-      animation: float 1.6s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
+    .result{
+      margin-top:18px;
+      font-size:18px;
+      font-weight:800;
+      display:none;
     }
   </style>
 </head>
 
 <body>
   <div class="card">
-    <div class="heart">💘</div>
+    <!-- Cambia il file se lo chiami diversamente -->
+    <img class="top-img" src="puccia.png" alt="cute" />
+
     <h1 id="question">Vuoi essere la mia Valentine?</h1>
     <p class="sub" id="hint">Premi una risposta 👇</p>
 
@@ -116,21 +116,29 @@
   </div>
 
   <script>
+    // Sequenza "No" come richiesto
     const noPhrases = [
       "No",
       "Sei sicura?",
       "Ma sei proprio sicura?",
-      "Daii 😭 sei sicurissima?",
-      "Ultima possibilità… sicura?",
-      "Ok, mi spezzi il cuore 💔 sicura?",
-      "Naaah 😌 ripensaci… sicura?",
-      "Non ci credo 😳 sicura?",
-      "Ti pregooo 🥺 sicura?",
-      "Va bene… ma il sì è lì 😇"
+      "Ultima possibilità, sei proprio convinta?",
+      "Neanche se ti porto un girasole?",
+      "E con un buon risotto invece?",
+      "Dai così poi puoi farci la recensione, sei sicura? 🥺",
+      "Così mi spezzi il cuore baby, non farlo 💔",
+      "Ti compro tutti i Ferrero Rocher che vuoi giuro 😭",
+      "Grazie amore 💜"
     ];
 
     let noClicks = 0;
-    let yesScale = 1;
+
+    // Crescita reale (niente transform scale) -> niente sovrapposizione
+    const base = {
+      fontSize: 18,
+      padY: 14,
+      padX: 20,
+      minW: 160
+    };
 
     const yesBtn = document.getElementById("yesBtn");
     const noBtn  = document.getElementById("noBtn");
@@ -144,9 +152,17 @@
     }
 
     function growYes() {
-      // cresce ogni volta, ma con un tetto per non rompere layout
-      yesScale = Math.min(yesScale + 0.18, 2.8);
-      yesBtn.style.transform = `scale(${yesScale})`;
+      // step di crescita
+      const step = Math.min(noClicks, 10);
+
+      const newFont = Math.min(base.fontSize + step * 2, 34);
+      const newPadY = Math.min(base.padY + step * 2, 34);
+      const newPadX = Math.min(base.padX + step * 4, 80);
+      const newMinW = Math.min(base.minW + step * 28, 420);
+
+      yesBtn.style.fontSize = newFont + "px";
+      yesBtn.style.padding = `${newPadY}px ${newPadX}px`;
+      yesBtn.style.minWidth = newMinW + "px";
     }
 
     noBtn.addEventListener("click", () => {
@@ -160,14 +176,15 @@
       result.style.display = "block";
       hint.textContent = "Scelta perfetta 😌💘";
       question.textContent = "Yay!! 💖";
-      // disabilita i bottoni dopo il sì
+
       yesBtn.disabled = true;
       noBtn.disabled = true;
+
       yesBtn.style.filter = "brightness(1.05)";
       noBtn.style.filter = "grayscale(0.6) opacity(0.7)";
     });
 
-    // inizializza
+    // init
     updateNoText();
   </script>
 </body>
